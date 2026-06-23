@@ -1,4 +1,5 @@
 import type { OrderItem } from '../../../types'
+import { formatCurrency } from '../../../utils'
 import styles from './order-items-list.module.css'
 
 interface OrderItemsListProps {
@@ -7,8 +8,6 @@ interface OrderItemsListProps {
   onUpdateQuantity: (itemId: string, quantity: number) => void
 }
 
-const fmt = (value: number) =>
-  value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
 export function OrderItemsList({ items, onRemove, onUpdateQuantity }: OrderItemsListProps) {
   if (items.length === 0) {
@@ -24,7 +23,7 @@ export function OrderItemsList({ items, onRemove, onUpdateQuantity }: OrderItems
           <li key={item.id} className={styles.item}>
             <div className={styles.itemLeft}>
               <span className={styles.product}>{item.product}</span>
-              <span className={styles.price}>{fmt(item.unitPrice)} / un.</span>
+              <span className={styles.price}>{formatCurrency(item.unitPrice)} / un.</span>
             </div>
 
             <div className={styles.itemRight}>
@@ -43,7 +42,7 @@ export function OrderItemsList({ items, onRemove, onUpdateQuantity }: OrderItems
                 >+</button>
               </div>
 
-              <span className={styles.subtotal}>{fmt(item.quantity * item.unitPrice)}</span>
+              <span className={styles.subtotal}>{formatCurrency(item.quantity * item.unitPrice)}</span>
 
               <button
                 className={styles.removeBtn}
@@ -57,7 +56,7 @@ export function OrderItemsList({ items, onRemove, onUpdateQuantity }: OrderItems
 
       <div className={styles.totalRow}>
         <span className={styles.totalLabel}>Total</span>
-        <span className={styles.totalValue}>{fmt(total)}</span>
+        <span className={styles.totalValue}>{formatCurrency(total)}</span>
       </div>
     </div>
   )
