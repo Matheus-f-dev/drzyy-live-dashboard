@@ -3,12 +3,16 @@ import type { Guest } from '../types'
 
 const CAPACITY = 500
 
+export type ConnectionStatus = 'connected' | 'reconnecting' | 'error'
+
 interface LiveFeedState {
   guests: Guest[]
   totalPresent: number
   totalVip: number
   occupancyRate: number
+  connectionStatus: ConnectionStatus
   addGuest: (guest: Guest) => void
+  setConnectionStatus: (status: ConnectionStatus) => void
 }
 
 export const useLiveFeedStore = create<LiveFeedState>((set) => ({
@@ -16,6 +20,7 @@ export const useLiveFeedStore = create<LiveFeedState>((set) => ({
   totalPresent: 0,
   totalVip: 0,
   occupancyRate: 0,
+  connectionStatus: 'reconnecting',
 
   addGuest: (guest) =>
     set((state) => {
@@ -25,4 +30,6 @@ export const useLiveFeedStore = create<LiveFeedState>((set) => ({
       const occupancyRate = Math.min((totalPresent / CAPACITY) * 100, 100)
       return { guests, totalPresent, totalVip, occupancyRate }
     }),
+
+  setConnectionStatus: (connectionStatus) => set({ connectionStatus }),
 }))

@@ -12,6 +12,46 @@
   z-index: 100;
 }
 
+/* ── Connection banner ──────────────────────────────── */
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  position: sticky;
+  top: 0;
+  z-index: 101;
+}
+
+.bannerReconnecting {
+  background: rgba(234, 179, 8, 0.12);
+  color: #ca8a04;
+  border-bottom: 1px solid rgba(234, 179, 8, 0.25);
+}
+
+.bannerError {
+  background: rgba(239, 68, 68, 0.12);
+  color: var(--color-danger);
+  border-bottom: 1px solid rgba(239, 68, 68, 0.25);
+}
+
+.bannerDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  animation: pulse 1.2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
 .brand {
   display: flex;
   align-items: center;
