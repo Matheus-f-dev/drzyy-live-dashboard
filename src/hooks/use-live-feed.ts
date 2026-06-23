@@ -1,14 +1,18 @@
 import { useEffect } from 'react'
+import { io } from 'socket.io-client'
 import { useLiveFeedStore } from '../store'
-import { generateGuest } from '../utils/guest-generator'
+import type { Guest } from '../types'
 
-const INTERVAL_MS = 3000
+const SERVER_URL = 'http://localhost:3333'
 
 export function useLiveFeed() {
   const addGuest = useLiveFeedStore((s) => s.addGuest)
 
   useEffect(() => {
-    const id = setInterval(() => addGuest(generateGuest()), INTERVAL_MS)
-    return () => clearInterval(id)
+    const socket = io(SERVER_URL)
+
+    socket.on('new-customer', (customer: Guest) => addGuest(customer))
+
+    return () => { socket.disconnect() }
   }, [addGuest])
 }
