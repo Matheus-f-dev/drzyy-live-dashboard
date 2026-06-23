@@ -1,7 +1,8 @@
 import { useLiveFeedStore } from '../../store'
+import { TableHeader } from './table-header'
+import { GuestRow } from './guest-row'
+import { TableEmpty } from './table-empty'
 import styles from './data-table.module.css'
-
-const COLUMNS = ['ID', 'Nome', 'Idade', 'VIP', 'Entrada']
 
 interface DataTableProps {
   onOpenModal: () => void
@@ -9,51 +10,38 @@ interface DataTableProps {
 
 export function DataTable({ onOpenModal }: DataTableProps) {
   const guests = useLiveFeedStore((s) => s.guests)
+  const newestId = guests[0]?.id
 
   return (
-    <section className={styles.wrapper} aria-label="Tabela de dados">
+    <section className={styles.wrapper} aria-label="Feed de clientes">
       <div className={styles.toolbar}>
-        <h2 className={styles.heading}>
-          Feed ao vivo
+        <div className={styles.titleGroup}>
+          <h2 className={styles.heading}>Clientes</h2>
           {guests.length > 0 && (
-            <span className={styles.liveBadge}>● LIVE</span>
+            <span className={styles.count}>{guests.length}</span>
           )}
-        </h2>
+        </div>
         <button className={styles.addBtn} onClick={onOpenModal}>
           + Novo registro
         </button>
       </div>
 
       <div className={styles.tableWrapper}>
-        {guests.length === 0 ? (
-          <p className={styles.empty}>Aguardando primeiros registros...</p>
-        ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                {COLUMNS.map((col) => (
-                  <th key={col} className={styles.th}>{col}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {guests.map((guest, index) => (
-                <tr key={guest.id} className={`${styles.tr} ${index === 0 ? styles.trNew : ''}`}>
-                  <td className={styles.td}><code className={styles.code}>{guest.id}</code></td>
-                  <td className={styles.td}>{guest.name}</td>
-                  <td className={styles.td}>{guest.age} anos</td>
-                  <td className={styles.td}>
-                    {guest.isVip
-                      ? <span className={`${styles.badge} ${styles.badgeVip}`}>VIP</span>
-                      : <span className={`${styles.badge} ${styles.badgeStd}`}>Padrão</span>
-                    }
-                  </td>
-                  <td className={styles.td}><code className={styles.code}>{guest.enteredAt}</code></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+        <table className={styles.table}>
+          <TableHeader />
+          <tbody>
+            {guests.length === 0
+              ? <TableEmpty />
+              : guests.map((guest) => (
+                  <GuestRow
+                    key={guest.id}
+                    guest={guest}
+                    isNew={guest.id === newestId}
+                  />
+                ))
+            }
+          </tbody>
+        </table>
       </div>
     </section>
   )

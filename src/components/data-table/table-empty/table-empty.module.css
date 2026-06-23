@@ -1,0 +1,26 @@
+.cell {
+  padding: 52px 20px;
+  text-align: center;
+  border: none;
+}
+
+.icon {
+  display: block;
+  font-size: 28px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin: 0 0 4px;
+}
+
+.sub {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  opacity: 0.6;
+  margin: 0;
+}

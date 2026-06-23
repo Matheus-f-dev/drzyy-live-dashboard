@@ -1,0 +1,22 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.vip {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--color-accent-hover);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+.std {
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
