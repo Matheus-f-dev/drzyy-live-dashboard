@@ -1,7 +1,11 @@
+import { useMemo } from 'react'
 import { useLiveFeedStore } from '../../store'
+import { useSearch } from '../../hooks'
+import { normalizeText } from '../../utils'
 import { TableHeader } from './table-header'
 import { GuestRow } from './guest-row'
 import { TableEmpty } from './table-empty'
+import { SearchInput } from './search-input'
 import styles from './data-table.module.css'
 
 interface DataTableProps {
@@ -10,7 +14,15 @@ interface DataTableProps {
 
 export function DataTable({ onOpenModal }: DataTableProps) {
   const guests = useLiveFeedStore((s) => s.guests)
-  const newestId = guests[0]?.id
+  const { query, setQuery, debounced } = useSearch()
+
+  const filtered = useMemo(() => {
+    if (!debounced) return guests
+    const term = normalizeText(debounced)
+    return guests.filter((g) => normalizeText(g.name).includes(term))
+  }, [guests, debounced])
+
+  const newestId = filtered[0]?.id === guests[0]?.id ? guests[0]?.id : undefined
 
   return (
     <section className={styles.wrapper} aria-label="Feed de clientes">
@@ -21,18 +33,27 @@ export function DataTable({ onOpenModal }: DataTableProps) {
             <span className={styles.count}>{guests.length}</span>
           )}
         </div>
-        <button className={styles.addBtn} onClick={onOpenModal}>
-          + Novo registro
-        </button>
+
+        <div className={styles.toolbarRight}>
+          <SearchInput
+            value={query}
+            onChange={setQuery}
+            resultCount={filtered.length}
+            totalCount={guests.length}
+          />
+          <button className={styles.addBtn} onClick={onOpenModal}>
+            + Novo
+          </button>
+        </div>
       </div>
 
       <div className={styles.tableWrapper}>
         <table className={styles.table}>
           <TableHeader />
           <tbody>
-            {guests.length === 0
-              ? <TableEmpty />
-              : guests.map((guest) => (
+            {filtered.length === 0
+              ? <TableEmpty query={debounced} />
+              : filtered.map((guest) => (
                   <GuestRow
                     key={guest.id}
                     guest={guest}

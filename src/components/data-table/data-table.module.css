@@ -17,6 +17,13 @@
   flex-wrap: wrap;
 }
 
+.toolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .titleGroup {
   display: flex;
   align-items: center;

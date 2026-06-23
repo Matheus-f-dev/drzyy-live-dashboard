@@ -1,1 +1,1 @@
-// utils barrel export
+export { normalizeText } from './normalize-text'
