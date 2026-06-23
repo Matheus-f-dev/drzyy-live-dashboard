@@ -1,5 +1,8 @@
 import { AppModal } from '../app-modal'
 import type { Guest } from '../../types'
+import { useOrderStore } from '../../store'
+import { OrderForm } from './order-form'
+import { OrderItemsList } from './order-items-list'
 import styles from './guest-modal.module.css'
 
 interface GuestModalProps {
@@ -8,6 +11,9 @@ interface GuestModalProps {
 }
 
 export function GuestModal({ guest, onClose }: GuestModalProps) {
+  const { addItem, getOrder } = useOrderStore()
+  const order = guest ? getOrder(guest.id) : { guestId: '', items: [] }
+
   return (
     <AppModal
       isOpen={guest !== null}
@@ -28,6 +34,10 @@ export function GuestModal({ guest, onClose }: GuestModalProps) {
           </div>
 
           <div className={styles.divider} />
+
+          <OrderForm onAdd={(data) => addItem(guest.id, data)} />
+
+          <OrderItemsList items={order.items} />
 
           <dl className={styles.fields}>
             <div className={styles.field}>

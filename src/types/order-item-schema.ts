@@ -1,25 +1,5 @@
 import { z } from 'zod'
 
-export interface Guest {
-  id: string
-  name: string
-  age: number
-  isVip: boolean
-  enteredAt: string
-}
-
-export interface OrderItem {
-  id: string
-  product: string
-  quantity: number
-  unitPrice: number
-}
-
-export interface Order {
-  guestId: string
-  items: OrderItem[]
-}
-
 export const orderItemSchema = z.object({
   product:   z.string().min(1, 'Informe o produto'),
   quantity:  z.coerce.number().int().min(1, 'Mínimo 1'),
