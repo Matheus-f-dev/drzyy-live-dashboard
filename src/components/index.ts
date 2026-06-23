@@ -1,1 +1,4 @@
-// components barrel export
+export { AppHeader } from './app-header'
+export { DashboardStats } from './dashboard-stats'
+export { DataTable } from './data-table'
+export { AppModal } from './app-modal'
