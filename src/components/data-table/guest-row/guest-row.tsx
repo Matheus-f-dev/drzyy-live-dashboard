@@ -5,11 +5,16 @@ import styles from './guest-row.module.css'
 interface GuestRowProps {
   guest: Guest
   isNew: boolean
+  onSelect: (guest: Guest) => void
 }
 
-export function GuestRow({ guest, isNew }: GuestRowProps) {
+export function GuestRow({ guest, isNew, onSelect }: GuestRowProps) {
   return (
-    <tr className={`${styles.row} ${isNew ? styles.rowNew : ''}`}>
+    <tr
+      className={`${styles.row} ${isNew ? styles.rowNew : ''}`}
+      onClick={() => onSelect(guest)}
+      title={`Ver comanda de ${guest.name}`}
+    >
       <td className={styles.td}>
         <span className={styles.name}>{guest.name}</span>
       </td>

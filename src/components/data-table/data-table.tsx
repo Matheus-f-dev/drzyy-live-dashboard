@@ -1,12 +1,13 @@
 import { useMemo } from 'react'
 import { useLiveFeedStore } from '../../store'
-import { useSearch, useVipFilter } from '../../hooks'
+import { useSearch, useVipFilter, useGuestModal } from '../../hooks'
 import { normalizeText } from '../../utils'
 import { TableHeader } from './table-header'
 import { GuestRow } from './guest-row'
 import { TableEmpty } from './table-empty'
 import { SearchInput } from './search-input'
 import { VipFilter } from './vip-filter'
+import { GuestModal } from '../guest-modal'
 import styles from './data-table.module.css'
 
 interface DataTableProps {
@@ -17,6 +18,7 @@ export function DataTable({ onOpenModal }: DataTableProps) {
   const guests              = useLiveFeedStore((s) => s.guests)
   const { query, setQuery, debounced } = useSearch()
   const { vipOnly, toggle } = useVipFilter()
+  const { selected, open, close } = useGuestModal()
 
   const filtered = useMemo(() => {
     let result = guests
@@ -63,12 +65,15 @@ export function DataTable({ onOpenModal }: DataTableProps) {
                     key={guest.id}
                     guest={guest}
                     isNew={guest.id === newestId}
+                    onSelect={open}
                   />
                 ))
             }
           </tbody>
         </table>
       </div>
+
+      <GuestModal guest={selected} onClose={close} />
     </section>
   )
 }

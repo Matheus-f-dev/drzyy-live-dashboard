@@ -1,13 +1,10 @@
-import { useState } from 'react'
 import { AppHeader } from '../../components/app-header'
 import { DashboardStats } from '../../components/dashboard-stats'
 import { DataTable } from '../../components/data-table'
-import { AppModal } from '../../components/app-modal'
 import { useLiveFeed } from '../../hooks'
 import styles from './dashboard-page.module.css'
 
 export function DashboardPage() {
-  const [modalOpen, setModalOpen] = useState(false)
   useLiveFeed()
 
   return (
@@ -17,15 +14,9 @@ export function DashboardPage() {
       <main className={styles.main}>
         <div className={styles.container}>
           <DashboardStats />
-          <DataTable onOpenModal={() => setModalOpen(true)} />
+          <DataTable onOpenModal={() => {}} />
         </div>
       </main>
-
-      <AppModal
-        isOpen={modalOpen}
-        title="Novo Registro"
-        onClose={() => setModalOpen(false)}
-      />
     </>
   )
 }
