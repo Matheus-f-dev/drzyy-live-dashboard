@@ -18,9 +18,25 @@
 }
 
 .heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 15px;
   font-weight: 600;
   color: var(--color-text);
+}
+
+.liveBadge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--color-danger);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }
 
 .addBtn {
@@ -66,6 +82,15 @@
   transition: background 0.1s;
 }
 
+.trNew {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 .tr:last-child {
   border-bottom: none;
 }
@@ -81,9 +106,11 @@
   white-space: nowrap;
 }
 
-.tdActions {
-  padding: 12px 16px;
-  text-align: right;
+.empty {
+  padding: 40px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--color-text-muted);
 }
 
 .code {
@@ -95,30 +122,14 @@
   border-radius: 4px;
 }
 
-.status {
+.badge {
   display: inline-flex;
   align-items: center;
   padding: 3px 10px;
   border-radius: 99px;
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
-.statusActive  { background: rgba(34, 197, 94, 0.12);  color: var(--color-success); }
-.statusPending { background: rgba(245, 158, 11, 0.12); color: var(--color-warning); }
-.statusInactive{ background: rgba(239, 68, 68, 0.12);  color: var(--color-danger);  }
-
-.actionBtn {
-  padding: 5px 12px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  color: var(--color-text-muted);
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  transition: color 0.15s, border-color 0.15s;
-}
-
-.actionBtn:hover {
-  color: var(--color-accent-hover);
-  border-color: var(--color-accent);
-}
+.badgeVip { background: rgba(99, 102, 241, 0.15); color: var(--color-accent-hover); }
+.badgeStd { background: var(--color-surface-2);   color: var(--color-text-muted);  }

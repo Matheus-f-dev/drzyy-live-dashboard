@@ -1,1 +1,1 @@
-// store barrel export
+export { useLiveFeedStore } from './live-feed-store'

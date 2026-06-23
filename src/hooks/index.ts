@@ -1,1 +1,1 @@
-// hooks barrel export
+export { useLiveFeed } from './use-live-feed'
